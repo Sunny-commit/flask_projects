@@ -1,0 +1,24 @@
+{%extends 'theme.html'%}
+{% load static %}
+{% block main %}
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                {% for product in products %}
+                <div class="card">
+                    <div class="card-header">
+                        <img src="{% static 'images/image1.jpg' %}" class="img-fluid" alt="Product">
+
+
+                    </div>
+                    <div class="card-body">
+                    </div>
+                    <div class="card-footer">
+                        <!--Add footer content here-->
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

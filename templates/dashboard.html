@@ -1,0 +1,217 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lost and Found Portal - Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f7fc;
+        }
+        .sidebar {
+            width: 250px;
+            background-color: #343a40;
+            color: #fff;
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100%;
+            padding-top: 20px;
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .sidebar .nav-link {
+            color: #fff;
+            font-size: 18px;
+            padding: 10px 15px;
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+        .sidebar .nav-link:hover {
+            background-color: #007bff;
+            color: #fff;
+        }
+        .main-content {
+            margin-left: 260px;
+            padding: 30px;
+        }
+        .header {
+            background-color: #007bff;
+            color: white;
+            padding: 15px;
+            text-align: center;
+        }
+        .footer {
+            background-color: #f8f9fa;
+            text-align: center;
+            padding: 15px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+        .card {
+            margin-bottom: 20px;
+        }
+        .table th, .table td {
+            text-align: center;
+            vertical-align: middle;
+        }
+        .social-links a {
+            margin: 10px;
+            color: #fff;
+            font-size: 24px;
+            transition: all 0.3s;
+        }
+        .social-links a:hover {
+            color: #007bff;
+        }
+        .statistics {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 30px;
+        }
+        .statistics .stat-card {
+            width: 48%;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        .statistics .stat-card h4 {
+            margin-bottom: 15px;
+        }
+        .recent-activity-table {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        .recent-activity-table table {
+            width: 100%;
+            margin-top: 15px;
+        }
+        .recent-activity-table th, .recent-activity-table td {
+            text-align: center;
+        }
+        .recent-activity-table thead {
+            background-color: #007bff;
+            color: white;
+        }
+        .graph-placeholder {
+            height: 200px;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #007bff;
+            font-size: 20px;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="sidebar">
+        <h3 class="text-center text-white">Lost and Found</h3>
+        <ul class="nav flex-column">
+            <li class="nav-item">
+                <a class="nav-link" href="/">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/report">Report Lost</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/dashboard">Dashboard</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#contactModal">Contact Info</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="https://intranet.rguktn.ac.in/SMS/" target="_blank">RGUKT Official Website</a>
+            </li>
+        </ul>
+        <div class="social-links text-center mt-4">
+            <a href="https://www.youtube.com" target="_blank" class="fab fa-youtube"></a>
+            <a href="https://www.instagram.com" target="_blank" class="fab fa-instagram"></a>
+            <a href="https://chat.openai.com" target="_blank" class="fab fa-chatgpt"></a>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <div class="header">
+            <h1>Lost and Found Portal</h1>
+        </div>
+
+        <div class="statistics">
+            <div class="stat-card">
+                <h4>Total Lost Items</h4>
+                <p>{{ data.total_lost }}</p>
+            </div>
+            <div class="stat-card">
+                <h4>Total Found Items</h4>
+                <p>{{ data.total_found }}</p>
+            </div>
+        </div>
+
+        <div class="recent-activity-table">
+            <h4>Recent Activity</h4>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Item Name</th>
+                        <th>Status</th>
+                        <th>Reported By</th>
+                        <th>Address</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in data.recent_activity %}
+                    <tr>
+                        <td>{{ item.item_name }}</td>
+                        <td>{{ item.status }}</td>
+                        <td>{{ item.reported_by }}</td>
+                        <td>{{ item.address }}</td>
+                        <td>{{ item.date }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="graph-placeholder">
+            [Graph Placeholder]
+        </div>
+    </div>
+
+    <footer class="footer">
+        <p>&copy; 2024 Lost and Found Portal</p>
+    </footer>
+
+    <!-- Contact Info Modal -->
+    <div class="modal fade" id="contactModal" tabindex="-1" aria-labelledby="contactModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="contactModalLabel">Contact Information</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p><strong>P. Chandu</strong></p>
+                    <p>Student at RGUKT</p>
+                    <p>Phone: <a href="tel:+917288901951">7288901951</a></p>
+                    <p>Email: <a href="mailto:sunny6866666@gmail.com">sunny6866666@gmail.com</a></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

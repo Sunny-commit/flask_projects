@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Item Status</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center">Update Status for {{ item.item_name }}</h1>
+        <form action="/update/{{ item.id }}" method="POST">
+            <div class="mb-3">
+                <label for="status" class="form-label">Status</label>
+                <select id="status" name="status" class="form-control">
+                    <option value="Lost" {% if item.status == 'Lost' %}selected{% endif %}>Lost</option>
+                    <option value="Found" {% if item.status == 'Found' %}selected{% endif %}>Found</option>
+                    <option value="Returned" {% if item.status == 'Returned' %}selected{% endif %}>Returned</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Update</button>
+        </form>
+        <a href="/" class="btn btn-secondary mt-3">Back to Dashboard</a>
+    </div>
+</body>
+</html>
